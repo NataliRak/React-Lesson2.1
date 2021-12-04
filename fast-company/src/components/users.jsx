@@ -4,6 +4,10 @@ import api from "../api"
 const Users = () => {
 
     const rate ="/5"
+
+    const [users, setUsers] = useState(api.users.fetchAll())
+    const [count, setCount] = useState(users.length)
+
     const formatCount =()=> {
         if (count === 2 || count === 3 || count === 4) return count +" " + "человека тусуется с тобой сегодня"
         return count === 0?"никто не тусуется с тобой сегодня": count + " " + "человек тусуется с тобой сегодня"
@@ -15,9 +19,6 @@ const Users = () => {
         return classes
     }
     
-     const [users, setUsers] = useState(api.users.fetchAll())
-     const [count, setCount] = useState(users.length)
-
      const handleDelete =(id) => {
         setCount((prevState)=>prevState -1)
         setUsers((prevState)=>prevState.filter((user)=>user !== id)) 
