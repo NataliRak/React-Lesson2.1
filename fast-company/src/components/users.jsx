@@ -5,7 +5,6 @@ const Users = () => {
 
     const rate ="/5"
     const formatCount =()=> {
-        
         if (count === 2 || count === 3 || count === 4) return count +" " + "человека тусуется с тобой сегодня"
         return count === 0?"никто не тусуется с тобой сегодня": count + " " + "человек тусуется с тобой сегодня"
     }
@@ -24,9 +23,9 @@ const Users = () => {
         setUsers((prevState)=>prevState.filter((user)=>user !== id)) 
     }
 
-     const renderBadges = (qualities) => {
+     const renderBadgesQalities = (qualities) => {
         return qualities.map((quality) => (
-          <span key={quality._id} className={`badge bg-${quality.color} m-1`}>
+          <span key={quality._id} className={`badge bg-${quality.color} m-1 `}>
             {quality.name}
           </span>
         ));
@@ -57,7 +56,7 @@ const Users = () => {
             {users.map((user)=> 
                 (<tr key={user._id} >
                    <td>{user.name}</td> 
-                   <td> {renderBadges(user.qualities)}</td>
+                   <td> {renderBadgesQalities(user.qualities)}</td>
                    <td>{user.profession.name}</td> 
                    <td>{user.completedMeetings}</td> 
                    <td>{user.rate}{rate}</td>
