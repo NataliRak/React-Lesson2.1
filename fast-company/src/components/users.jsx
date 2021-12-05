@@ -14,7 +14,7 @@ const Users = () => {
     }
       
     const getBageClasses =()=> {
-        let classes = "badge "
+        let classes = "badge rounded-pill "
         classes+=count === 0 ?"bg-danger" : "bg-primary"
         return classes
     }
@@ -26,7 +26,7 @@ const Users = () => {
 
      const renderBadgesQalities = (qualities) => {
         return qualities.map((quality) => (
-          <span key={quality._id} className={`badge bg-${quality.color} m-1 `}>
+          <span key={quality._id} className={`badge rounded-pill bg-${quality.color} m-1 `}>
             {quality.name}
           </span>
         ));
@@ -61,7 +61,7 @@ const Users = () => {
                    <td>{user.profession.name}</td> 
                    <td>{user.completedMeetings}</td> 
                    <td>{user.rate}{rate}</td>
-                   <td> <button className = "btn btn-danger btn-sm" onClick = {()=>handleDelete(user)}>delete</button></td>    
+                   <td> <button className = "btn rounded-pill btn-danger btn-sm" onClick = {()=>handleDelete(user)}>delete</button></td>    
                 </tr>)
             )}
                 
