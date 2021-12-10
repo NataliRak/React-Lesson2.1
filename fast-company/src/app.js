@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Users from "./components/users";
-import API from "./api";
+import api from "./api";
 
 function App() {
   const [users, setUsers] = useState(
@@ -8,11 +8,9 @@ function App() {
       return { ...user, isBookmark: false };
     })
   );
-  const [count, setCount] = useState(users.length);
 
-  const handleDelete = (id) => {
-    setCount((prevState) => prevState - 1);
-    setUsers((prevState) => prevState.filter((user) => user !== id));
+  const handleDelete = (userId) => {
+    setUsers((prevState) => prevState.filter((user) => user._id !== userId));
   };
 
   const handleToggleBookmark = (userId) => {
@@ -25,12 +23,33 @@ function App() {
     setUsers(updatedBookmark);
   };
 
+  const renderPhrase = (number) => {
+    if (number === 2 || number === 3 || number === 4)
+      return number + " " + "человека тусуется с тобой сегодня";
+    return number === 0
+      ? "никто не тусуется с тобой сегодня"
+      : number + " " + "человек тусуется с тобой сегодня";
+  };
+
+  const renderBadgesQalities = (qualities) => {
+    return qualities.map((quality) => (
+      <span
+        key={quality._id}
+        className={`badge rounded-pill bg-${quality.color} m-1 `}
+      >
+        {quality.name}
+      </span>
+    ));
+  };
+
   return (
     <>
       <Users
         users={users}
         onDelete={handleDelete}
         onToggleBookmark={handleToggleBookmark}
+        renderBadgesQalities={renderBadgesQalities}
+        renderPhrase={renderPhrase}
       />
     </>
   );
