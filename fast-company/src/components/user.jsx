@@ -1,13 +1,19 @@
 import React from "react";
 import BookMark from "./bookmark";
-import Qualities from "./quality";
+import Qualitie from "./quality";
 
-function User({ user, onDelete, onToggleBookmark, renderBadgesQalities }) {
+function User({ user, onDelete, onToggleBookmark }) {
   return (
     <tr key={user._id}>
       <td>{user.name}</td>
       <td>
-        <Qualities badges={renderBadgesQalities} qualities={user.qualities} />
+        {user.qualities.map((quality) => (
+          <Qualitie
+            key={quality._id}
+            name={quality.name}
+            color={quality.color}
+          />
+        ))}
       </td>
       <td>{user.profession.name}</td>
       <td>{user.completedMeetings}</td>

@@ -31,24 +31,12 @@ function App() {
       : number + " " + "человек тусуется с тобой сегодня";
   };
 
-  const renderBadgesQalities = (qualities) => {
-    return qualities.map((quality) => (
-      <span
-        key={quality._id}
-        className={`badge rounded-pill bg-${quality.color} m-1 `}
-      >
-        {quality.name}
-      </span>
-    ));
-  };
-
   return (
     <>
       <Users
         users={users}
         onDelete={handleDelete}
         onToggleBookmark={handleToggleBookmark}
-        renderBadgesQalities={renderBadgesQalities}
         renderPhrase={renderPhrase}
       />
     </>
