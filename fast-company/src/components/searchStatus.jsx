@@ -15,7 +15,7 @@ function SearchStatus({ phrase, length }) {
 }
 
 SearchStatus.propTypes = {
-  phrase: PropTypes.string.isRequired,
+  phrase: PropTypes.func.isRequired,
   length: PropTypes.number.isRequired
 };
 
