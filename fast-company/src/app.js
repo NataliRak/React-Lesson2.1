@@ -24,8 +24,10 @@ function App() {
   };
 
   const renderPhrase = (number) => {
-    if (number === 2 || number === 3 || number === 4)
+    if (number === 2 || number === 3 || number === 4) {
       return number + " " + "человека тусуется с тобой сегодня";
+    }
+
     return number === 0
       ? "никто не тусуется с тобой сегодня"
       : number + " " + "человек тусуется с тобой сегодня";

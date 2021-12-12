@@ -1,3 +1,6 @@
+import React from "react";
+import PropTypes from "prop-types";
+
 function SearchStatus({ phrase, length }) {
   const getBageClasses = () => {
     let classes = "badge rounded-pill ";
@@ -10,5 +13,10 @@ function SearchStatus({ phrase, length }) {
     </h2>
   );
 }
+
+SearchStatus.propTypes = {
+  phrase: PropTypes.string.isRequired,
+  length: PropTypes.number.isRequired
+};
 
 export default SearchStatus;
