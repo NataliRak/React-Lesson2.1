@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 
 const TableBody = ({ data, colums }) => {
+  const MAX_RATING = 5;
   const renderContent = (item, colum) => {
     if (colums[colum].component) {
       const component = colums[colum].component;
@@ -10,6 +11,9 @@ const TableBody = ({ data, colums }) => {
         return component(item);
       }
       return component;
+    }
+    if (colums[colum].path === "rate") {
+      return `${item[colums[colum].path]} / ${MAX_RATING}`;
     }
     return _.get(item, colums[colum].path);
   };

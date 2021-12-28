@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import Pagination from "./pagination";
-import SearchStatus from "./searchStatus";
-import GroupList from "./groupList";
-import UsersTable from "./usersTable";
+import Pagination from "../components/pagination";
+import SearchStatus from "../components/searchStatus";
+import GroupList from "../components/groupList";
+import UsersTable from "../components/usersTable";
+import Preloader from "../components/preloader";
 
 import { paginate } from "../utils/paginate";
 import PropTypes from "prop-types";
@@ -15,7 +16,7 @@ function Users() {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfessions] = useState();
   const [professionslSelect, setProfessionslSelect] = useState();
-  const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+  const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
   const [users, setUsers] = useState();
 
   useEffect(() => {
@@ -89,8 +90,8 @@ function Users() {
     return (
       <>
         {" "}
-        <div className="d-flex justify-content-start">
-          <div className="m-3 bg-dark p-2 text-white bg-opacity-70 rounded ">
+        <div className="d-flex ">
+          <div className="d-flex m-3 p-2 bg-dark p-2 text-white  rounded ">
             {professions && (
               <div className="bg rounded ">
                 <GroupList
@@ -105,9 +106,11 @@ function Users() {
             )}
           </div>
 
-          <div className=" m-2">
+          <div className="d-flex flex-column   p-2 flex-grow-1 ">
             {count === 0 ? (
-              <SearchStatus phrase={renderPhrase} length={count} />
+              <div className="mb-3 p-2 w-100 bd-highlight">
+                <SearchStatus phrase={renderPhrase} length={count} />
+              </div>
             ) : (
               <div className="">
                 <SearchStatus phrase={renderPhrase} length={count} />
@@ -133,7 +136,7 @@ function Users() {
       </>
     );
   }
-  return "loading...";
+  return <Preloader />;
 }
 
 Users.propTypes = {
