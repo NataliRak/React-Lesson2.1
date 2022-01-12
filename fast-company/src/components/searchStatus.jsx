@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function SearchStatus({ phrase, length }) {
   const getBageClasses = () => {
-    let classes = "badge rounded-pill m-1 ";
+    let classes = "badge rounded-pill m-1  w-100 ";
     classes += length === 0 ? "bg-danger" : "bg-primary";
     return classes;
   };

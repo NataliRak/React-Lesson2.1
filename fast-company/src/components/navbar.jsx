@@ -6,7 +6,7 @@ const Navbar = () => {
 
   const getClasses = (path) => {
     const classes = "nav-link";
-    const classesActive = `${classes} active`;
+    const classesActive = `${classes} active bg-warning text-dark`;
 
     if (pathname.length > 1 && pathname.slice(-1) === "/") {
       return pathname.slice(0, -1) === path ? classesActive : classes;
@@ -16,9 +16,9 @@ const Navbar = () => {
   };
 
   return (
-    <div className="container  bg-info  m-0 text-dark bg-opacity-10  ">
+    <div className="container  d-flex  ">
       <ul className="nav nav-tabs ">
-        <li className="nav-item">
+        <li className="nav-item ">
           <Link className={getClasses("/")} to="/">
             Main
           </Link>

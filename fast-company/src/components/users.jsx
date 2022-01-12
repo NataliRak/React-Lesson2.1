@@ -5,6 +5,7 @@ import SearchStatus from "../components/searchStatus";
 import GroupList from "../components/groupList";
 import UsersTable from "../components/usersTable";
 import Preloader from "../components/preloader";
+import SearchInput from "./SearchInput";
 
 import { paginate } from "../utils/paginate";
 import PropTypes from "prop-types";
@@ -18,6 +19,7 @@ function Users() {
   const [professionslSelect, setProfessionslSelect] = useState();
   const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
   const [users, setUsers] = useState();
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     api.users.fetchAll().then((data) =>
@@ -29,10 +31,12 @@ function Users() {
     );
   }, []);
 
+  // delete
   const handleDelete = (userId) => {
     setUsers((prevState) => prevState.filter((user) => user._id !== userId));
   };
 
+  // bookmark
   const handleToggleBookmark = (userId) => {
     const updatedBookmark = users.map((user) => {
       if (user._id === userId) {
@@ -43,6 +47,7 @@ function Users() {
     setUsers(updatedBookmark);
   };
 
+  // bange
   const renderPhrase = (number) => {
     if (number === 2 || number === 3 || number === 4) {
       return number + " " + "человека тусуется с тобой сегодня";
@@ -60,11 +65,13 @@ function Users() {
     setCurrentPage(1);
   }, [professionslSelect]);
 
+  // pagination
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex);
   };
 
   const handleProfessionslSelect = (item) => {
+    setSearchValue("");
     setProfessionslSelect(item);
   };
 
@@ -72,17 +79,36 @@ function Users() {
   const handleSort = (item) => {
     setSortBy(item);
   };
+  //  search input
+  const handleSearchValue = (e) => {
+    setSearchValue(e.target.value);
+  };
 
   if (users) {
+    //  search input
+    const getSearchedUsers = () => {
+      const searchedUsers = users.filter((user) => user.name.toLowerCase().includes(searchValue));
+      return searchedUsers;
+    };
+
+    const searchedUsers = getSearchedUsers();
+
+    // filter
     const filteredUsers = professionslSelect
       ? users.filter((user) => user.profession._id === professionslSelect._id)
       : users;
 
     const count = filteredUsers.length;
 
-    const sortUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
+    // sort
+    const sortUsers = _.orderBy(
+      searchValue ? searchedUsers : filteredUsers,
+      [sortBy.path],
+      [sortBy.order]
+    );
     const userCrop = paginate(sortUsers, currentPage, pageSize);
 
+    // cleareFilter
     const cleareFilter = () => {
       setProfessionslSelect();
     };
@@ -106,14 +132,16 @@ function Users() {
             )}
           </div>
 
-          <div className="d-flex flex-column   p-2 flex-grow-1 ">
+          <div className="d-flex flex-column p-2 flex-grow-1 ">
+            <SearchInput search={handleSearchValue} value={searchValue} />
             {count === 0 ? (
-              <div className="mb-3 p-2 w-100 bd-highlight">
+              <div className="">
                 <SearchStatus phrase={renderPhrase} length={count} />
               </div>
             ) : (
               <div className="">
                 <SearchStatus phrase={renderPhrase} length={count} />
+
                 <UsersTable
                   users={userCrop}
                   onSort={handleSort}
@@ -140,8 +168,8 @@ function Users() {
 }
 
 Users.propTypes = {
-  users: PropTypes.array.isRequired,
-  renderPhrase: PropTypes.func.isRequired
+  users: PropTypes.array,
+  renderPhrase: PropTypes.func
 };
 
 export default Users;
