@@ -81,6 +81,7 @@ function Users() {
   };
   //  search input
   const handleSearchValue = (e) => {
+    setProfessionslSelect();
     setSearchValue(e.target.value);
   };
 
@@ -111,6 +112,7 @@ function Users() {
     // cleareFilter
     const cleareFilter = () => {
       setProfessionslSelect();
+      setSearchValue("");
     };
 
     return (
