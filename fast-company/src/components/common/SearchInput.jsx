@@ -10,7 +10,7 @@ const SearchInput = ({ search, value }) => {
       id=""
       value={value}
       onChange={(e) => search(e)}
-      placeholder="Search..."
+      placeholder="  Search..."
     />
   );
 };

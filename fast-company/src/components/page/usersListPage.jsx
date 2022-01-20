@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 
-import Pagination from "../components/pagination";
-import SearchStatus from "../components/searchStatus";
-import GroupList from "../components/groupList";
-import UsersTable from "../components/usersTable";
-import Preloader from "../components/preloader";
-import SearchInput from "./SearchInput";
+import Pagination from "../common/pagination";
+import SearchStatus from "../ui/searchStatus";
+import GroupList from "../common/groupList";
+import UsersTable from "../ui/usersTable";
+import Preloader from "../common/preloader";
+import SearchInput from "../common/SearchInput";
 
-import { paginate } from "../utils/paginate";
+import { paginate } from "../../utils/paginate";
 import PropTypes from "prop-types";
-import api from "../api";
+import api from "../../api";
 import _ from "lodash";
 
-function Users() {
+function UsersListPage() {
   const pageSize = 3;
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfessions] = useState();
@@ -60,7 +60,7 @@ function Users() {
 
   useEffect(() => {
     api.professions.fetchAll().then((data) => setProfessions(data));
-  });
+  }, []);
   useEffect(() => {
     setCurrentPage(1);
   }, [professionslSelect]);
@@ -169,9 +169,9 @@ function Users() {
   return <Preloader />;
 }
 
-Users.propTypes = {
+UsersListPage.propTypes = {
   users: PropTypes.array,
   renderPhrase: PropTypes.func
 };
 
-export default Users;
+export default UsersListPage;

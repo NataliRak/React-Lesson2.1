@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import api from "../api";
-import QualitiesList from "./qualitiesList";
+import api from "../../../api";
+import Qualities from "../../ui/qulities";
 
 const UserPage = () => {
   const [user, setUser] = useState();
   const { userId } = useParams();
+  // const history = useHistory();
+  // const { pathname } = useLocation();
 
   useEffect(() => {
     api.users.getById(userId).then((data) => setUser(data));
   }, []);
+  // const handleClick = () => {
+  //   history.push(`${pathname}/edit`);
+  // };
 
   if (user) {
     return (
@@ -19,20 +24,22 @@ const UserPage = () => {
             <h1 className="card-title">{user.name}</h1>
             <h3 className="card-subtitle mb-2 text-muted">Профессия: {user.profession.name}</h3>
             <p className="card-text">
-              <QualitiesList qualities={user.qualities} />
+              <Qualities qualities={user.qualities} />
             </p>
             <p className="card-text">
               Встретился <span className="fw-bold">{user.completedMeetings}</span> раз
             </p>
-            <h5 className="card-subtitle mb-2 fw-normal">
+            <h5 className="card-subtitle mb-3 fw-normal">
               Оценка: <span className="fw-bold">{user.rate}</span>
             </h5>
-            <Link
-              to="/users"
-              className="btn rounded-pill  btn-warning m-3 d-grid gap-2  mx-auto "
-              role="button">
-              Все пользователи
+            <Link to={`/users/${user._id}/edit`}>
+              <button className="btn rounded-pill btn-warning"> Изменить</button>
             </Link>
+            <div className="mt-4">
+              <Link className="btn rounded-pill btn-info" type="button" to="/users">
+                Все пользователи
+              </Link>
+            </div>
           </div>
         </div>
       </div>
