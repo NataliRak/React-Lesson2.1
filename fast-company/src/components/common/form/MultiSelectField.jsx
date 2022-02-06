@@ -15,7 +15,7 @@ const MultiSelectField = ({ options, onChange, name, label }) => {
     onChange({ name: name, value });
   };
   return (
-    <div className="mb-4">
+    <div className="mb-4 ">
       <label htmlFor="validationCustom04" className="form-label">
         {label}
       </label>
@@ -23,7 +23,7 @@ const MultiSelectField = ({ options, onChange, name, label }) => {
         closeMenuOnSelect={false}
         isMulti
         options={optionsArray}
-        className="basic-multi-select bg-dark text-white"
+        className="basic-multi-select bg-dark text-white "
         classNamePrefix="select"
         onChange={handleChange}
         name={name}

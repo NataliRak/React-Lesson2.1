@@ -1,56 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 import api from "../../../api";
-import Qualities from "../../ui/qulities";
+import UserCard from "../../ui/UserCard";
+import QualitiesCard from "../../ui/QualitiesCard";
+import MeetingsCard from "../../ui/MeetingsCard";
+import Comments from "../../ui/Comments";
 
-const UserPage = () => {
+const UserPage = ({ userId }) => {
   const [user, setUser] = useState();
-  const { userId } = useParams();
-  // const history = useHistory();
-  // const { pathname } = useLocation();
-
   useEffect(() => {
     api.users.getById(userId).then((data) => setUser(data));
   }, []);
-  // const handleClick = () => {
-  //   history.push(`${pathname}/edit`);
-  // };
-
   if (user) {
     return (
-      <div className="container">
-        <div className="card w-25 mt-3 shadow p-4 bg-dark text-white p-2">
-          <div className="card-body ">
-            <h1 className="card-title">{user.name}</h1>
-            <h3 className="card-subtitle mb-2 text-muted">Профессия: {user.profession.name}</h3>
-            <p className="card-text">
-              <Qualities qualities={user.qualities} />
-            </p>
-            <p className="card-text">
-              Встретился <span className="fw-bold">{user.completedMeetings}</span> раз
-            </p>
-            <h5 className="card-subtitle mb-3 fw-normal">
-              Оценка: <span className="fw-bold">{user.rate}</span>
-            </h5>
-            <Link to={`/users/${user._id}/edit`}>
-              <button className="btn rounded-pill btn-warning"> Изменить</button>
-            </Link>
-            <div className="mt-4">
-              <Link className="btn rounded-pill btn-info" type="button" to="/users">
-                Все пользователи
-              </Link>
-            </div>
+      <div className="container ">
+        <div className="row gutters-sm ">
+          <div className="col-md-4 mb-3 ">
+            <UserCard user={user} />
+            <QualitiesCard data={user.qualities} />
+            <MeetingsCard value={user.completedMeetings} />
+          </div>
+          <div className="col-md-8">
+            <Comments />
           </div>
         </div>
       </div>
     );
   } else {
-    return (
-      <div className="container">
-        <h1 className="loader-text"></h1>
-      </div>
-    );
+    return <h1>Loading</h1>;
   }
+};
+
+UserPage.propTypes = {
+  userId: PropTypes.string.isRequired
 };
 
 export default UserPage;

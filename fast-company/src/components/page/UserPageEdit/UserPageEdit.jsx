@@ -88,12 +88,14 @@ const UserEdit = () => {
     }
   };
   useEffect(() => validate(), [data]);
+
   const handleChange = (target) => {
     setData((prevState) => ({
       ...prevState,
       [target.name]: target.value
     }));
   };
+
   const validate = () => {
     const errors = validator(data, validatorConfig);
     setErrors(errors);
@@ -147,7 +149,10 @@ const UserEdit = () => {
                 defaultValue={data.qualities}
                 name="qualities"
               />
-              <button type="submit" disabled={!isValid} className="btn btn-primary w-100 mx-auto">
+              <button
+                type="submit"
+                disabled={!isValid}
+                className="btn btn-warning rounded-pill w-100 mx-auto">
                 Обновить
               </button>
             </form>
